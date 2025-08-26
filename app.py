@@ -74,10 +74,12 @@ async def send_proactive(conversation_reference):
 # 🔹 RODAR SERVIDOR
 # =========================
 app = web.Application()
-app.router.add_post("https://bot-enviomensagem-emb8dyahc0accwb5.eastus2-01.azurewebsites.net/api/messages", messages)
+app.router.add_post("/api/messages", messages)
 
 if __name__ == "__main__":
     try:
-        web.run_app(app, host="localhost", port=3978)
+        # Azure define a porta dinamicamente
+        port = int(os.environ.get("PORT", 3978))
+        web.run_app(app, host="0.0.0.0", port=port)
     except Exception as e:
         raise e
